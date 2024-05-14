@@ -1,0 +1,23 @@
+tqdm>=4.64.1
+requests>=2.28.1
+requests-toolbelt>=0.10.1
+beautifulsoup4>=4.11.1
+tabulate>=0.8.10
+certifi>=2022.12.7
+
+
+
+uespLog -- Submitted ESO Data...
+
+Successfully uploaded file!
+Filename: uespLog.lua
+File Size: 5056305 bytes
+Local Filename: /home/uesp/esolog/upload/uespLogn5omOYLua 
+
+Result: 
+Parsed Records: 4113
+Uploaded Builds: 0
+Saved Builds: 0
+Uploaded Characters: 4
+Saved Characters: 2 
+
