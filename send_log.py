@@ -74,7 +74,7 @@ def beautify_response(response: str) -> str:
 # Example usage
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="use with caution")
-    parser.add_argument('option', type=str, help="'upload' - uploading a log \n'beautify' - test the responseparser")
+    parser.add_argument('option', type=str, nargs='?', default='upload', help="'upload' - uploading a log \n'beautify' - test the responseparser")
     
     args = parser.parse_args()
     
@@ -83,6 +83,5 @@ if __name__ == '__main__':
             print(beautify_response(file.read()))
     else:
         username = "Einherer"
-        lua_file_path = r"C:\Users\johan\OneDrive\Documents\Elder Scrolls Online\live\SavedVariables\uespLog.lua.old"
+        lua_file_path = r"C:\Users\johan\OneDrive\Documents\Elder Scrolls Online\live\SavedVariables\uespLog.lua"
         upload_to_uesp(username, lua_file_path)
-
