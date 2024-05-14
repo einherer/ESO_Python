@@ -78,14 +78,11 @@ if __name__ == '__main__':
     
     args = parser.parse_args()
     
-    if args.option == "upload":
-        username = "Einherer"
-        lua_file_path = r"C:\Users\johan\OneDrive\Documents\Elder Scrolls Online\live\SavedVariables\uespLog.lua.old"
-        upload_to_uesp(username, lua_file_path)
-        
-    elif args.option == "beautify":
+    if args.option == "beautify":
         with open("./example_response.html", 'rb') as file:
             print(beautify_response(file.read()))
     else:
-        print("Invalid or missing argument")
+        username = "Einherer"
+        lua_file_path = r"C:\Users\johan\OneDrive\Documents\Elder Scrolls Online\live\SavedVariables\uespLog.lua.old"
+        upload_to_uesp(username, lua_file_path)
 
