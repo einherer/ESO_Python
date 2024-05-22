@@ -11,11 +11,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 import base64
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-encpw = "JVBPR3R5RU1oTVDCpw=="
 
 
 # Quick-start development settings - unsuitable for production
@@ -76,18 +76,29 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-      #  'ENGINE': 'django.db.backends.sqlite3',
-      #  'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'einherer$eso',
-        'USER': 'einherer',
-        'PASSWORD': base64.b64decode(encpw).decode() ,
-        'HOST': 'einherer.mysql.eu.pythonanywhere-services.com',
-        'PORT': '3306',
+DJANGO_ENV = config('DJANGO_ENV')
+
+if DJANGO_ENV == 'development':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+elif DJANGO_ENV == 'production':
+    encoded_password = config('DB_PASSWORD_ENCODED')
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'einherer$eso',
+            'USER': 'einherer',
+            'PASSWORD': base64.b64decode(encoded_password).decode() ,
+            'HOST': 'einherer.mysql.eu.pythonanywhere-services.com',
+            'PORT': '3306',
+        }
+    }
+else:
+    raise ValueError("Invalid DJANGO_ENV value")
 
 
 # Password validation
