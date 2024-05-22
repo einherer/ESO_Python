@@ -1,0 +1,8 @@
+## Title: MyOwn
+## APIVersion: 101038
+## Version: 1.0
+## Author: YourName
+## Description: Logs character data on logout.
+## SavedVariables: MyOwnSavedVars
+
+MyOwn.lua
