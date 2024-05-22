@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class DjangoAppConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "ESO_app"
+    name = "django_app"

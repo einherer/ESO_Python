@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ['einherer.eu.pythonanywhere.com']
 # Application definition
 
 INSTALLED_APPS = [
-    "ESO_app.apps.DjangoAppConfig",
+    "django_app.apps.DjangoAppConfig",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
