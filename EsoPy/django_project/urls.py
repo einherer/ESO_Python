@@ -20,5 +20,7 @@ from django_app import views
 
 urlpatterns = [
     path('', views.welcome, name='welcome'),
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='maintainance'),
+    path('upload/', views.upload_file, name='upload_file'),
+    path('upload-form/', views.file_upload_form, name='file_upload_form'),
 ]
