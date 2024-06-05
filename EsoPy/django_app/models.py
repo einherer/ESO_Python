@@ -9,7 +9,7 @@ class Account(models.Model):
 
 class Character(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    character_id = models.IntegerField(unique=True)
+    character_id = models.CharField(max_length=20, primary_key=True)
     name = models.CharField(max_length=100)
     faction_name = models.CharField(max_length=100, blank=True, null=True)
     race_name = models.CharField(max_length=100, blank=True, null=True)
