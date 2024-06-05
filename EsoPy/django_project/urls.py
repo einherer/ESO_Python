@@ -23,4 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='maintainance'),
     path('upload/', views.upload_file, name='upload_file'),
     path('upload-form/', views.file_upload_form, name='file_upload_form'),
+    path('accounts/', views.account_list, name='account_list'),
+    path('account/<account_name>/', views.account_detail, name='account_detail'),
+    path('character/<character_id>/', views.character_detail, name='character_detail'),
 ]

@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import luadata
 from django_app.utilities import load_data_into_database
+from django_app.models import Account, Character
 
 def welcome(request):
     return render(request, 'welcome.html')
@@ -24,3 +25,16 @@ def upload_file(request):
             return JsonResponse({'error': str(e)}, status=500)
     else:
         return JsonResponse({'error': 'File upload failed or file not provided.'}, status=400)
+    
+def account_list(request):
+    accounts = Account.objects.all()
+    return render(request, 'account_list.html', {'accounts': accounts})
+
+def account_detail(request, account_name):
+    account = get_object_or_404(Account, name=account_name)
+    characters = Character.objects.filter(account=account)
+    return render(request, 'account_detail.html', {'account': account, 'characters': characters})
+
+def character_detail(request, character_id):
+    character = get_object_or_404(Character, character_id=character_id)
+    return render(request, 'character_detail.html', {'character': character})

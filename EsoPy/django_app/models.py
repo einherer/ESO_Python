@@ -9,15 +9,15 @@ class Account(models.Model):
 
 class Character(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    character_id = models.CharField(max_length=100, unique=True)
+    character_id = models.IntegerField(unique=True)
     name = models.CharField(max_length=100)
-    faction_name = models.CharField(max_length=100)
-    race_name = models.CharField(max_length=100)
-    class_name = models.CharField(max_length=100)
-    level = models.IntegerField()
-    champion_points = models.IntegerField()
-    is_werewolf = models.BooleanField()
-    is_vampire = models.BooleanField()
+    faction_name = models.CharField(max_length=100, blank=True, null=True)
+    race_name = models.CharField(max_length=100, blank=True, null=True)
+    class_name = models.CharField(max_length=100, blank=True, null=True)
+    level = models.IntegerField(default=0)  # Ensure default value
+    champion_points = models.IntegerField(default=0)
+    is_werewolf = models.BooleanField(default=False)
+    is_vampire = models.BooleanField(default=False)
 
 class Equipment(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
