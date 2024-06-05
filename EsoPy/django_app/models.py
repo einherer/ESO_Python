@@ -29,6 +29,9 @@ class Equipment(models.Model):
     set_info = models.TextField()
     set_bonus_info = models.TextField()
     enchant_info = models.TextField()
+    
+    def __str__(self):
+        return self.name
 
 class ActiveAbility(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
@@ -36,6 +39,9 @@ class ActiveAbility(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     icon = models.TextField()
+    
+    def __str__(self):
+        return self.name
 
 class ActiveBuff(models.Model):
     character = models.ForeignKey(Character, on_delete=models.CASCADE)
@@ -43,3 +49,6 @@ class ActiveBuff(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     icon = models.TextField()
+    
+    def __str__(self):
+        return self.name

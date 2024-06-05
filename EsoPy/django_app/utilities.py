@@ -23,62 +23,55 @@ def load_data_into_database(lua_data):
                 is_werewolf = bool(character_data.get('isWerewolf', False))
                 is_vampire = bool(character_data.get('isVampire', False))
 
-                character, created = Character.objects.get_or_create(character_id=character_id, defaults={
-                    'account': account,
-                    'name': character_data.get('Name', ''),
-                    'faction_name': character_data.get('FactionName', ''),
-                    'race_name': character_data.get('RaceName', ''),
-                    'class_name': character_data.get('ClassName', ''),
-                    'level': level,
-                    'champion_points': champion_points,
-                    'is_werewolf': is_werewolf,
-                    'is_vampire': is_vampire
-                })
-                if not created:
-                    character.account = account
-                    character.name = character_data.get('Name', character.name)
-                    character.faction_name = character_data.get('FactionName', character.faction_name)
-                    character.race_name = character_data.get('RaceName', character.race_name)
-                    character.class_name = character_data.get('ClassName', character.class_name)
-                    character.level = level
-                    character.champion_points = champion_points
-                    character.is_werewolf = is_werewolf
-                    character.is_vampire = is_vampire
-                    character.save()
+                # Retrieve or create the Account object
+                account, _ = Account.objects.get_or_create(server=server, name=account_name)
+
+                # Retrieve or create the Character object and associate it with the Account
+                character, _ = Character.objects.get_or_create(character_id=character_id, account=account)
+
+                # Update the Character object with data
+                character.name = character_data.get('Name', character.name)
+                character.faction_name = character_data.get('FactionName', character.faction_name)
+                character.race_name = character_data.get('RaceName', character.race_name)
+                character.class_name = character_data.get('ClassName', character.class_name)
+                character.level = level
+                character.champion_points = champion_points
+                character.is_werewolf = is_werewolf
+                character.is_vampire = is_vampire
+                character.save()
 
                 # Save equipment
                 for equipment_data in character_data.get('Equipment', []):
-                    Equipment.objects.update_or_create(
+                    item, _ = Equipment.objects.update_or_create(
                         character=character,
-                        slot=equipment_data['slot'],
-                        defaults={
-                            'name': equipment_data['name'],
-                            'icon': equipment_data['icon'],
-                            'quality': equipment_data['quality']
-                        }
-                    )
+                        slot=equipment_data['slot'])
+                    
+                    item.name = equipment_data.get('name', '')
+                    item.icon = equipment_data.get('icon', '')
+                    item.quality = equipment_data.get('quality', '')
+                    item.save()
 
                 # Save active abilities
-                for ability_data in character_data.get('ActiveAbilities', []):
-                    ActiveAbility.objects.update_or_create(
+                for ability_data in character_data.get('activeAbilities', []):
+                    ability, _ = ActiveAbility.objects.update_or_create(
                         character=character,
-                        name=ability_data['name'],
-                        defaults={
-                            'description': ability_data['description'],
-                            'icon': ability_data['icon']
-                        }
-                    )
+                        ability_id=int(ability_data['id']))
+                    
+                    ability.description = ability_data.get('description', '')
+                    ability.icon = ability_data.get('icon', '')
+                    ability.name = ability_data.get('name', '')
+                    ability.save()
 
                 # Save active buffs
-                for buff_data in character_data.get('ActiveBuffs', []):
-                    ActiveBuff.objects.update_or_create(
+                for buff_data in character_data.get('activeBuffs', []):
+                    buff, _ = ActiveBuff.objects.update_or_create(
                         character=character,
-                        name=buff_data['name'],
-                        defaults={
-                            'description': buff_data['description'],
-                            'icon': buff_data['icon']
-                        }
-                    )
+                        buff_id=int(buff_data['id']))
+                    
+                    buff.description = buff_data.get('description', '')
+                    buff.icon = buff_data.get('icon', '')
+                    buff.name = buff_data.get('name', '')
+                    buff.save()
 
 def print_lua(lua_data):
     for server_name, server_data in lua_data.items():

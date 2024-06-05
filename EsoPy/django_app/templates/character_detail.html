@@ -4,6 +4,7 @@
     <title>Character: {{ character.name }}</title>
 </head>
 <body>
+    {% load custom_filters %}
     <h1>Character: {{ character.name }}</h1>
     <p>Faction: {{ character.faction_name }}</p>
     <p>Race: {{ character.race_name }}</p>
@@ -16,21 +17,37 @@
     <h2>Equipment</h2>
     <ul>
         {% for equipment in character.equipment_set.all %}
-            <li>{{ equipment.slot }}: {{ equipment.name }} ({{ equipment.quality }})</li>
+            <img src="https://esoicons.uesp.net{{ equipment.icon }}" alt="{{ equipment.name }} icon" width="32" height="32">
+            <li>{{ equipment.slot }}: {{ equipment.name|remove_suffix }} ({{ equipment.quality }})</li>
         {% endfor %}
     </ul>
 
     <h2>Active Abilities</h2>
     <ul>
         {% for ability in character.activeability_set.all %}
-            <li>{{ ability.name }}: {{ ability.description }}</li>
+        <img src="https://esoicons.uesp.net{{ ability.icon }}" alt="{{ ability.name }} icon" width="32" height="32">
+        <li>{{ ability.name }}
+            {% if ability.description %}
+                <ul>
+                    <li>{{ ability.description|extract_numbers }}</li>
+                </ul>
+            {% endif %}
+        </li>
         {% endfor %}
     </ul>
 
     <h2>Active Buffs</h2>
     <ul>
         {% for buff in character.activebuff_set.all %}
-            <li>{{ buff.name }}: {{ buff.description }}</li>
+
+        <img src="https://esoicons.uesp.net{{ buff.icon }}" alt="{{ buff.name }} icon" width="32" height="32">
+            <li>{{ buff.name }}
+                {% if buff.description %}
+                    <ul>
+                        <li>{{ buff.description|extract_numbers }}</li>
+                    </ul>
+                {% endif %}
+            </li>
         {% endfor %}
     </ul>
 
